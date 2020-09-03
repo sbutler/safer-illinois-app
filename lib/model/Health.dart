@@ -15,6 +15,7 @@
  */
 
 import 'dart:collection';
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -2319,7 +2320,7 @@ String _decryptBlob(Map<String, dynamic> param) {
   String encBlob = (param != null) ? param['encryptedBlob'] : null;
   PrivateKey privateKey = (param != null) ? param['privateKey'] : null;
 
-  String aesKey = ((privateKey != null) && (encKey != null)) ? RSACrypt.decrypt(encKey, privateKey) : null;
+  Uint8List aesKey = ((privateKey != null) && (encKey != null)) ? RSACrypt.decryptBytes(encKey, privateKey) : null;
   String blob = ((aesKey != null) && (encBlob != null)) ? AESCrypt.decrypt(encBlob, aesKey) : null;
   return blob;
 }
@@ -2327,10 +2328,10 @@ String _decryptBlob(Map<String, dynamic> param) {
 Map<String, dynamic> _encryptBlob(Map<String, dynamic> param) {
   String blob = (param != null) ? param['blob'] : null;
   PublicKey publicKey =  (param != null) ? param['publicKey'] : null;
-  String aesKey = AESCrypt.randomKey();
+  Uint8List aesKey = AESCrypt.randomKey();
 
   String encryptedBlob = ((blob != null) && (aesKey != null)) ? AESCrypt.encrypt(blob, aesKey) : null;
-  String encryptedKey = ((blob != null) && (aesKey != null) && (publicKey != null)) ? RSACrypt.encrypt(aesKey, publicKey) : null;
+  String encryptedKey = ((blob != null) && (aesKey != null) && (publicKey != null)) ? RSACrypt.encryptBytes(aesKey, publicKey) : null;
 
   return {
     'encryptedKey': encryptedKey,

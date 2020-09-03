@@ -15,6 +15,7 @@
  */
 
 import 'dart:collection';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -457,9 +458,9 @@ class _Covid19DebugCreateEventPanelState extends State<Covid19DebugCreateEventPa
   }
 
   Future<String> _postEvent({String blob, String providerId}) async {
-    String aesKey = AESCrypt.randomKey();
+    Uint8List aesKey = AESCrypt.randomKey();
     String encryptedBlob = AESCrypt.encrypt(blob, aesKey);
-    String encryptedKey = RSACrypt.encrypt(aesKey, _rsaPublicKey);
+    String encryptedKey = RSACrypt.encryptBytes(aesKey, _rsaPublicKey);
 
     //PointyCastle.PrivateKey privateKey = await Health().loadRSAPrivateKey();
     //String decryptedKey = ((privateKey != null) && (encryptedKey != null)) ? RSACrypt.decrypt(encryptedKey, privateKey) : null;

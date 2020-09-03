@@ -491,7 +491,7 @@ class _Covid19DebugKeysPanelState extends State<Covid19DebugKeysPanel> {
 
   void _onGenerateAESKey() {
     Analytics.instance.logSelect(target: "Generate AES Keys");
-    _aesKeyController.text = AESCrypt.randomKey();
+    _aesKeyController.text = base64Encode(AESCrypt.randomKey());
   }
 
   void _onEncrypt() {
@@ -506,7 +506,7 @@ class _Covid19DebugKeysPanelState extends State<Covid19DebugKeysPanel> {
       return;
     }
 
-    String aesKey = _aesKeyController.text;
+    Uint8List aesKey = base64Decode(_aesKeyController.text);
     if ((aesKey == null) || aesKey.isEmpty) {
       AppAlert.showDialogResult(context, 'Missing AES Key');
       return;
@@ -519,7 +519,7 @@ class _Covid19DebugKeysPanelState extends State<Covid19DebugKeysPanel> {
     }
 
     String encryptedBlob = AESCrypt.encrypt(blob, aesKey);
-    String encryptedAESKey = (encryptedBlob != null) ? RSACrypt.encrypt(aesKey, _rsaPublicKey) : null;
+    String encryptedAESKey = (encryptedBlob != null) ? RSACrypt.encryptBytes(aesKey, _rsaPublicKey) : null;
 
     _encryptedAesKeyController.text = encryptedAESKey ?? 'NA';
     _encryptedBlobController.text = encryptedBlob ?? 'NA';
@@ -541,10 +541,10 @@ class _Covid19DebugKeysPanelState extends State<Covid19DebugKeysPanel> {
     }
 
 
-    String decryptedAESKey = (encryptedAESKey != null) ? RSACrypt.decrypt(encryptedAESKey, _rsaPrivateKey) : null;
+    Uint8List decryptedAESKey = (encryptedAESKey != null) ? RSACrypt.decryptBytes(encryptedAESKey, _rsaPrivateKey) : null;
     String decryptedBlob = ((decryptedAESKey != null) && (encryptedBlob != null)) ? AESCrypt.decrypt(encryptedBlob, decryptedAESKey) : null;
-    
-    _decryptedAesKeyController.text = decryptedAESKey ?? 'NA';
+
+    _decryptedAesKeyController.text = base64Encode(decryptedAESKey) ?? 'NA';
     _decryptedBlobController.text = decryptedBlob ?? 'NA';
 
   }
