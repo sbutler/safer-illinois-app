@@ -165,7 +165,7 @@ class AESCrypt {
   }
 
   static Uint8List randomKey({ int keySize = kCCBlockSizeAES128 }) {
-    var rand = new Random.secure();
+    var rand = Random.secure();
     return Uint8List.fromList(List.generate(keySize, (index) => rand.nextInt(256)));
   }
 }
