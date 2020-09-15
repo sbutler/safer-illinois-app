@@ -296,14 +296,16 @@ class Covid19StatusBlob {
   final String healthStatus;
   final int priority;
   final String nextStep;
+  final String nextStepHtml;
   final DateTime nextStepDateUtc;
   final String reason;
+  final String warning;
   final Covid19HistoryBlob historyBlob;
 
   static const String _nextStepDateMacro = '{next_step_date}';
-  static const String _nextStepDateFormat = 'MMMM d';
+  static const String _nextStepDateFormat = 'EEEE, MMM d';
 
-  Covid19StatusBlob({this.healthStatus, this.priority, this.nextStep, this.nextStepDateUtc, this.reason, this.historyBlob});
+  Covid19StatusBlob({this.healthStatus, this.priority, this.nextStep, this.nextStepHtml, this.nextStepDateUtc, this.reason, this.warning, this.historyBlob});
 
 
   factory Covid19StatusBlob.fromJson(Map<String, dynamic> json) {
@@ -311,8 +313,10 @@ class Covid19StatusBlob {
       healthStatus: json['health_status'],
       priority: json['priority'],
       nextStep: json['next_step'],
+      nextStepHtml: json['next_step_html'],
       nextStepDateUtc: healthDateTimeFromString(json['next_step_date']),
       reason: json['reason'],
+      warning: json['warning'],
       historyBlob: Covid19HistoryBlob.fromJson(json['history_blob']),
     ) : null;
   }
@@ -322,22 +326,42 @@ class Covid19StatusBlob {
       'health_status': healthStatus,
       'priority': priority,
       'next_step': nextStep,
+      'next_step_html': nextStepHtml,
       'next_step_date': healthDateTimeToString(nextStepDateUtc),
       'reason': reason,
+      'warning': warning,
       'history_blob': historyBlob?.toJson(),
     };
   }
 
   String get displayNextStep {
-    if (nextStep != null) {
-      if (nextStep.contains(_nextStepDateMacro)) {
-        if (nextStepDateUtc != null) {
-          String nextStepDateString = AppDateTime().formatDateTime(nextStepDateUtc.toLocal(), format: _nextStepDateFormat);
-          return nextStep.replaceAll(_nextStepDateMacro, nextStepDateString);
-        }
-      }
+    return _processMacros(nextStep);
+  }
+
+  String get displayNextStepHtml {
+    return _processMacros(nextStepHtml);
+  }
+
+  String get displayReason {
+    return _processMacros(reason);
+  }
+
+  String get displayWarning {
+    return _processMacros(warning);
+  }
+
+  String _processMacros(String value) {
+    if ((value != null) && (nextStepDateUtc != null) && value.contains(_nextStepDateMacro)) {
+      String nextStepDateString = AppDateTime().formatDateTime(nextStepDateUtc.toLocal(), format: _nextStepDateFormat);
+      return value.replaceAll(_nextStepDateMacro, nextStepDateString);
     }
-    return nextStep;
+    return value;
+  }
+
+  bool get requiresTest {
+    // TBD
+    return (nextStep?.toLowerCase()?.contains("test") ?? false) ||
+      (nextStepHtml?.toLowerCase()?.contains("test") ?? false);  
   }
 
   String get localizedHealthStatus {
