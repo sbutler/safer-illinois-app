@@ -17,7 +17,6 @@
 import 'dart:collection';
 
 import 'package:illinois/service/Analytics.dart';
-import 'package:illinois/service/AppDateTime.dart';
 import 'package:illinois/service/NativeCommunicator.dart';
 import 'package:illinois/utils/Utils.dart';
 import 'package:location/location.dart' as Core;
@@ -529,7 +528,7 @@ class _TestLocation extends StatelessWidget{
     return null;
   }
 
-  bool _determineIsOpen(HealthLocationDayOfOperation period){
+  /*bool _determineIsOpen(HealthLocationDayOfOperation period){
     String start = period?.openTime?.toUpperCase();
     String end = period?.closeTime?.toUpperCase();
     TimeOfDay startPeriod = start!=null? TimeOfDay.fromDateTime(AppDateTime().dateTimeFromString(start,format: "hh:mma")) : null;
@@ -544,9 +543,9 @@ class _TestLocation extends StatelessWidget{
     }
 
     return false;
-  }
+  }*/
 
-  bool _determineWillOpen(HealthLocationDayOfOperation period) {
+  /*bool _determineWillOpen(HealthLocationDayOfOperation period) {
     String start = period?.openTime?.toUpperCase();
     TimeOfDay startPeriod = start != null
         ? TimeOfDay.fromDateTime(
@@ -561,7 +560,7 @@ class _TestLocation extends StatelessWidget{
     }
 
     return false;
-  }
+  }*/
 
   /*void _onTapContact() async{
     await url_launcher.launch("tel:"+testLocation?.contact ?? "");
@@ -569,18 +568,22 @@ class _TestLocation extends StatelessWidget{
 
   void _onTapAddress(){
     Analytics.instance.logSelect(target: "COVID-19 Test Location");
-    NativeCommunicator().launchMap(
-        target: {
-          'latitude': testLocation?.latitude,
-          'longitude': testLocation?.longitude,
-          'zoom': 17,
-        },
-        markers: [{
-          'name': testLocation?.name,
-          'latitude': testLocation?.latitude,
-          'longitude': testLocation?.longitude,
-          'description': null,
-        }]);
+    double lat = testLocation?.latitude;
+    double lng = testLocation?.longitude;
+    if ((lat != null) && (lng != null)) {
+      NativeCommunicator().launchMap(
+          target: {
+            'latitude': testLocation?.latitude,
+            'longitude': testLocation?.longitude,
+            'zoom': 17,
+          },
+          markers: [{
+            'name': testLocation?.name,
+            'description': testLocation?.fullAddress,
+            'latitude': testLocation?.latitude,
+            'longitude': testLocation?.longitude,
+          }]);
+    }
   }
 }
 
