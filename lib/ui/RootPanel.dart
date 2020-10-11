@@ -18,12 +18,12 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:illinois/service/Config.dart';
 import 'package:illinois/service/DeepLink.dart';
 import 'package:illinois/service/FlexUI.dart';
 import 'package:illinois/service/FirebaseMessaging.dart';
 import 'package:illinois/service/Health.dart';
 import 'package:illinois/service/Service.dart';
-import 'package:illinois/service/User.dart';
 import 'package:illinois/service/Analytics.dart';
 import 'package:illinois/service/Localization.dart';
 import 'package:illinois/service/NotificationService.dart';
@@ -31,22 +31,15 @@ import 'package:illinois/ui/health/Covid19HistoryPanel.dart';
 import 'package:illinois/ui/health/Covid19InfoCenterPanel.dart';
 import 'package:illinois/ui/health/Covid19StatusPanel.dart';
 import 'package:illinois/ui/health/Covid19StatusUpdatePanel.dart';
-import 'package:illinois/ui/health/Covid19UpdatesPanel.dart';
 import 'package:illinois/ui/widgets/PopupDialog.dart';
 import 'package:illinois/ui/widgets/RoundedButton.dart';
 import 'package:illinois/service/Styles.dart';
 import 'package:illinois/utils/Utils.dart';
 
-class RootPanel extends StatefulWidget with AnalyticsPageAnonymous {
+class RootPanel extends StatefulWidget {
 
   @override
   _RootPanelState createState() => _RootPanelState();
-
-  @override
-  bool get analyticsPageAnonymous {
-    return false;
-  }
-
 }
 
 class _RootPanelState extends State<RootPanel> with SingleTickerProviderStateMixin implements NotificationsListener {
@@ -58,13 +51,12 @@ class _RootPanelState extends State<RootPanel> with SingleTickerProviderStateMix
     super.initState();
     NotificationService().subscribe(this, [
       FirebaseMessaging.notifyPopupMessage,
-      FirebaseMessaging.notifyCovid19Message,
       FirebaseMessaging.notifyCovid19Notification,
       Localization.notifyStringsUpdated,
-      User.notifyFavoritesUpdated,
+      Config.notifyEnvironmentChanged,
       FlexUI.notifyChanged,
       Health.notifyStatusUpdated,
-      DeepLink.notifyUri
+      DeepLink.notifyUri,
     ]);
 
     Services().initUI();
@@ -83,13 +75,13 @@ class _RootPanelState extends State<RootPanel> with SingleTickerProviderStateMix
     if (name == FirebaseMessaging.notifyPopupMessage) {
       _onFirebasePopupMessage(param);
     }
-    else if (name == FirebaseMessaging.notifyCovid19Message) {
-      _onFirebaseCovid19Message(param);
-    }
     else if (name == Localization.notifyStringsUpdated) {
       setState(() { });
     }
     else if (name == FlexUI.notifyChanged) {
+      setState(() { });
+    }
+    else if (name == Config.notifyEnvironmentChanged) {
       setState(() { });
     }
     else if (name == Health.notifyStatusUpdated) {
@@ -208,10 +200,6 @@ class _RootPanelState extends State<RootPanel> with SingleTickerProviderStateMix
         return PopupDialog(displayText: displayText, positiveButtonText: positiveButtonText);
       },
     );
-  }
-
-  Future<void> _onFirebaseCovid19Message(Map<String, dynamic> content) async {
-    Navigator.push(context, CupertinoPageRoute(builder: (context) => Covid19UpdatesPanel()));
   }
 
   Future<void> _onFirebaseCovid19Notification(Map<String, dynamic> notification) async {

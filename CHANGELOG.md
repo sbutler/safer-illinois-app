@@ -6,6 +6,140 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.7.5] - 2020-10-09
+### Added
+- Added "INCONCLUSIVE" and "REJECTED" results to "COVID-19 PCR" test [#271](https://github.com/rokwire/safer-illinois-app/issues/271).
+- StatusPanel content improvement for Accessibility Large Text [275](https://github.com/rokwire/safer-illinois-app/issues/275).
+
+### Changed
+- Updated "PCR.positive-NIP" status rule [#273](https://github.com/rokwire/safer-illinois-app/issues/273).
+
+## [2.7.4] - 2020-10-08
+### Added
+- Added boolean getters for config environment [#266](https://github.com/rokwire/safer-illinois-app/issues/266).
+- Added Debug button in Settings Home header bar for debug or dev builds only.
+
+### Changed
+- Environment radio buttons in SettingsDebugPanel replaced by dropdown, prompt user before switching [#266](https://github.com/rokwire/safer-illinois-app/issues/266).
+- Refresh UI on config environment change [#266](https://github.com/rokwire/safer-illinois-app/issues/266).
+
+## [2.7.3] - 2020-10-07
+### Added
+- Added "POSITIVE-IP" and "POSITIVE-NIP" results to "COVID-19 PCR" [#256](https://github.com/rokwire/safer-illinois-app/issues/256).
+
+### Changed
+- Updated rules negative PCR test to turn off the red status [#256](https://github.com/rokwire/safer-illinois-app/issues/256).
+
+### Fixed
+- Possible PII leak in logging for Submit Feedback [#110](https://github.com/rokwire/safer-illinois-app/issues/110).
+- Android: Request for location services is shown too early [#261](https://github.com/rokwire/safer-illinois-app/issues/261).
+- Update styling - padding, sizes etc for Next steps panel - Part 2 [#244](https://github.com/rokwire/safer-illinois-app/issues/244).
+
+### Deleted
+- Removed antibody test types from rules [#258](https://github.com/rokwire/safer-illinois-app/issues/258).
+
+## [2.7.2] - 2020-10-06
+### Changed
+- Do not keep in Storage location permision promot flag.
+- All Health2 classes renamed to regular Health classes and merged in Health model.
+- Update next steps styling [#244](https://github.com/rokwire/safer-illinois-app/issues/244).
+- Show status card screen panel slides on both sides [#239](https://github.com/rokwire/safer-illinois-app/issues/239).
+- Remove duplicate instance of links to home screen on status card [#247](https://github.com/rokwire/safer-illinois-app/issues/247).
+
+### Added
+- Added "PCR.positive-IP" and "PCR.positive-NIP" statuses to rules. [#248](https://github.com/rokwire/safer-illinois-app/issues/248).
+- Added eventExplanation to rules & user statuses. [#248](https://github.com/rokwire/safer-illinois-app/issues/248).
+
+### Deleted
+- Removed fixed timezone output support
+
+## [2.7.1] - 2020-10-02
+### Added
+- Created "Dev" XCode build environment for dev builds.
+- Enable http proxying in flutter env [#234](https://github.com/rokwire/safer-illinois-app/issues/234)
+
+### Changed
+- "ios/Runner/GoogleService-Info-Debug/Release.plist" secret file refs updated to "ios/Runner/GoogleService-Info-Dev/Prod.plist".
+- Locale strings from net just override the built-in asset strings [236](https://github.com/rokwire/safer-illinois-app/issues/236).
+
+### Deleted
+- Removed unused debug stuff from SettingsDebugPanel.
+- Removed unused stuff from Storage.
+
+
+## [2.7.0] - 2020-09-30
+### Changed
+- Update NextSteps html text style [231](https://github.com/rokwire/safer-illinois-app/issues/231)
+
+## [2.6.15] - 2020-09-29
+### Changed
+- Added more parameters to analytics health events [#178](https://github.com/rokwire/safer-illinois-app/issues/178).
+- Green status from antibody test rules replaced with yellow [#227](https://github.com/rokwire/safer-illinois-app/issues/227).
+- Wrong friendly date (Today, Tomorrow, day of week etc) [#229](https://github.com/rokwire/safer-illinois-app/issues/229).
+
+## [2.6.14] - 2020-09-28
+### Changed
+- Added back "No symptoms" group, implemented inclusive selection [#213](https://github.com/rokwire/safer-illinois-app/issues/213).
+- Fill UserTestMonitorInterval in Covid19DebugRulesPanel [#210](https://github.com/rokwire/safer-illinois-app/issues/210).
+- Log building access updates [#208](https://github.com/rokwire/safer-illinois-app/issues/208).
+- Format the date for {next_step_date} as friendly eg: Tomorrow. [#219](https://github.com/rokwire/safer-illinois-app/issues/219)
+- Covid19GuidelinesPanel: Disable dropdown when single county available + color fix[221](https://github.com/rokwire/safer-illinois-app/issues/221)
+- StatusInfoDialog: fix close button + remove green status[223](https://github.com/rokwire/safer-illinois-app/issues/223)
+
+### Fixed
+- Do not report user UUID in analytics [#216](https://github.com/rokwire/safer-illinois-app/issues/216).
+- Display an error message to the user who submits the symptoms without checking any list on the Symptom Check-in [#174](https://github.com/rokwire/safer-illinois-app/issues/174)
+
+## [2.6.13] - 2020-09-25
+### Changed
+- Create debug panel for editing Covid-19 rules [#205](https://github.com/rokwire/safer-illinois-app/issues/205)
+- Log building access updates [#202](https://github.com/rokwire/safer-illinois-app/issues/202)
+
+## [2.6.12] - 2020-09-24
+### Changed
+- Added analytics notifcation for processing test after exposure [#198](https://github.com/rokwire/safer-illinois-app/issues/198)
+- Rollback temporary flutter_html to 0.11.1 due to accessibility issue [#195](https://github.com/rokwire/safer-illinois-app/issues/195)
+- Update strings files [#193](https://github.com/rokwire/safer-illinois-app/issues/193)
+- Apply user's test monitor interval when evaluating status, rules format updates [#192](https://github.com/rokwire/safer-illinois-app/issues/192).
+
+## [2.6.11] - 2020-09-23
+### Changed
+- Check for negative PCR tests when reporting TEKs [#179](https://github.com/rokwire/safer-illinois-app/issues/179)
+- Cache county rules [#179](https://github.com/rokwire/safer-illinois-app/issues/179)
+- Cache user history [#179](https://github.com/rokwire/safer-illinois-app/issues/179)
+- Removed unused rules v1 [#179](https://github.com/rokwire/safer-illinois-app/issues/179)
+- Add role & student_level in analytics [#189](https://github.com/rokwire/safer-illinois-app/issues/189)
+- Wrong phone auth after Student/Amployee selection during the onboarding flow [#183](https://github.com/rokwire/safer-illinois-app/issues/183)
+- Improved semantics for StatusInfoDialog button [#157](https://github.com/rokwire/safer-illinois-app/issues/157)
+- OnboardingGetStartedPanel: remove background image from the semantics tree [#159](https://github.com/rokwire/safer-illinois-app/issues/159)
+- StatusInfoDialog: improve semantics [#155](https://github.com/rokwire/safer-illinois-app/issues/155)
+
+### Fixed
+- Fixed onboarding flow [#180](https://github.com/rokwire/safer-illinois-app/issues/180)
+
+## [2.6.10] - 2020-09-22
+### Changed
+ - i-Card may not being updated if the last update time is greater than 24 hours [#175](https://github.com/rokwire/safer-illinois-app/issues/175)
+
+## [2.6.9] - 2020-09-21
+### Changes
+ - Update "student_level" processing from AuthCard. [#172](https://github.com/rokwire/safer-illinois-app/issues/172)
+
+## [2.6.8] - 2020-09-18
+### Changed
+ - Change wait time colors and labels [#167](https://github.com/rokwire/safer-illinois-app/issues/167).
+ - Upgrade flutter for Safer Illinois to v. 1.20.4 [#82](https://github.com/rokwire/safer-illinois-app/issues/82).
+
+## [2.6.7] - 2020-09-17
+### Changed
+ - Rework swiper and fix the VoiceOver accessibility [#158](https://github.com/rokwire/safer-illinois-app/issues/158)
+ - Show wait time for each test location [#160](https://github.com/rokwire/safer-illinois-app/issues/160).
+
+ 
+## [2.6.6] - 2020-09-16
+### Changed
+ - Load symptoms and rules from the new Health API [#152](https://github.com/rokwire/safer-illinois-app/issues/152).
+
 ## [2.6.3] - 2020-09-11
 ### Changed
  - Remove "ASAP" label in Next Steps panel [#143](https://github.com/rokwire/safer-illinois-app/issues/143).
@@ -75,7 +209,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.4.1] - 2020-08-25
 ### Fixed
- - Introduced scopes in HealthRuleIntInterval2 (#47)
+ - Introduced scopes in HealthRuleIntInterval (#47)
 
 ## [2.4.0] - 2020-08-24
 ### Added
